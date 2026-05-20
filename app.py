@@ -2,7 +2,7 @@ import streamlit as st
 from ai_generator import generate_pm_output
 from pdf_generator import create_pdf
 
-st.title("AI-Supported AMR Project Planning Prototype")
+st.title("Prototype: AI-Supported Adaptive Planning Framework for AMR Deployment in Warehouse Logistics")
 
 st.write(
     "This prototype generates customized project management outputs "
