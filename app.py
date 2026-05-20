@@ -22,7 +22,6 @@ st.write(
 
 st.divider()
 
-# Session State Initialization
 if "ai_output" not in st.session_state:
     st.session_state.ai_output = None
 
@@ -42,7 +41,6 @@ if "gantt_buffer" not in st.session_state:
     st.session_state.gantt_buffer = None
 
 
-# Compact Input Layout
 col1, col2 = st.columns([1, 2])
 
 with col1:
@@ -80,13 +78,11 @@ with col1:
 
 st.divider()
 
-# Compact Generate Button
 button_col, empty_col = st.columns([1, 4])
 
 with button_col:
     generate_button = st.button("Generate Planning Output")
 
-# Generate Outputs
 if generate_button:
 
     try:
@@ -126,7 +122,6 @@ if generate_button:
             st.session_state.gantt_fig = None
             st.session_state.gantt_buffer = None
 
-            # Generate Gantt Chart
             if generate_gantt:
 
                 timeline_json_response = generate_timeline_json(
@@ -150,7 +145,7 @@ if generate_button:
         st.error("Something went wrong while generating the output.")
         st.exception(e)
 
-# Display AI Output
+
 if st.session_state.ai_output:
 
     st.subheader("Generated Planning Output")
@@ -167,7 +162,7 @@ if st.session_state.ai_output:
             mime="text/plain"
         )
 
-# Display Gantt Chart
+
 if st.session_state.gantt_fig:
 
     st.subheader("Generated Gantt Chart")
