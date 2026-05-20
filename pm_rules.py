@@ -1,76 +1,178 @@
-def get_pm_rules(integration_complexity):
-    if integration_complexity == "Low":
-        return {
-            "planning_depth": "Lightweight planning",
-            "mandatory_workstreams": [
-                "Basic IT Readiness",
-                "Operational Preparation",
-                "Basic User Training"
+def get_deployment_scale_rules(deployment_scale):
+    scale_rules = {
+        "Pilot": {
+            "planning_depth": "Light planning depth",
+            "rollout_strategy": "Small controlled pilot in one limited warehouse area",
+            "additional_workstreams": [
+                "Pilot validation",
+                "User feedback collection",
+                "Basic performance review"
             ],
-            "mandatory_risks": [
-                "Minor configuration delays",
-                "Basic user adoption issues",
-                "Limited process disruption"
+            "additional_risks": [
+                "Pilot results may not represent full warehouse complexity",
+                "Limited user adoption during pilot phase"
             ],
-            "mandatory_milestones": [
-                "Basic requirements confirmed",
-                "System access validated",
-                "Go-live readiness confirmed"
-            ],
-            "governance_level": "Simple weekly project check-in"
-        }
+            "key_milestones": [
+                "Pilot scope approved",
+                "Pilot deployment completed",
+                "Pilot feedback reviewed"
+            ]
+        },
 
-    elif integration_complexity == "Medium":
-        return {
-            "planning_depth": "Moderate planning and coordination",
-            "mandatory_workstreams": [
-                "WMS/ERP Interface Planning",
-                "System Integration Testing",
-                "Operational Readiness",
-                "Stakeholder Training",
-                "Pilot Validation"
+        "Single-Zone Rollout": {
+            "planning_depth": "Moderate planning depth",
+            "rollout_strategy": "Deployment in one defined operational zone",
+            "additional_workstreams": [
+                "Zone readiness assessment",
+                "Zone-specific training",
+                "Operational handover"
             ],
-            "mandatory_risks": [
-                "Interface mapping delays",
-                "Incomplete data exchange requirements",
-                "Operational disruption during pilot",
-                "User resistance during transition"
+            "additional_risks": [
+                "Disruption in selected warehouse zone",
+                "Insufficient coordination with zone supervisors"
             ],
-            "mandatory_milestones": [
-                "Interface requirements confirmed",
-                "Integration test completed",
-                "Pilot completed",
-                "Operational readiness approved"
-            ],
-            "governance_level": "Weekly project meeting with integration checkpoint"
-        }
+            "key_milestones": [
+                "Zone readiness confirmed",
+                "Single-zone rollout completed",
+                "Zone handover completed"
+            ]
+        },
 
-    elif integration_complexity == "High":
-        return {
-            "planning_depth": "Detailed planning, governance, testing, and risk control",
+        "Multi-Zone Rollout": {
+            "planning_depth": "High planning depth",
+            "rollout_strategy": "Phased rollout across multiple warehouse zones",
+            "additional_workstreams": [
+                "Phased rollout planning",
+                "Cross-zone dependency management",
+                "Multi-zone training coordination",
+                "Operational continuity planning"
+            ],
+            "additional_risks": [
+                "Interdependency conflicts between warehouse zones",
+                "Inconsistent adoption across zones",
+                "Higher coordination complexity"
+            ],
+            "key_milestones": [
+                "Multi-zone rollout plan approved",
+                "First zone deployed",
+                "All selected zones deployed",
+                "Cross-zone operations stabilized"
+            ]
+        },
+
+        "Full Warehouse Rollout": {
+            "planning_depth": "Very high planning depth",
+            "rollout_strategy": "End-to-end deployment across warehouse logistics operations",
+            "additional_workstreams": [
+                "Full warehouse transition planning",
+                "Change management",
+                "Large-scale training",
+                "Cutover planning",
+                "Post-go-live stabilization"
+            ],
+            "additional_risks": [
+                "Major operational disruption during rollout",
+                "Resistance to process change",
+                "High dependency on vendor and internal teams",
+                "Insufficient stabilization after go-live"
+            ],
+            "key_milestones": [
+                "Full rollout plan approved",
+                "Warehouse-wide training completed",
+                "Go-live completed",
+                "Post-go-live stabilization completed"
+            ]
+        }
+    }
+
+    return scale_rules.get(deployment_scale, scale_rules["Pilot"])
+
+
+def get_pm_rules(integration_complexity, deployment_scale):
+    complexity_rules = {
+        "Low": {
+            "governance_level": "Light governance",
             "mandatory_workstreams": [
-                "Detailed WMS/ERP Integration Design",
-                "API and Data Exchange Validation",
-                "End-to-End System Testing",
-                "Cybersecurity and Access Control Review",
-                "Operational Change Management",
-                "Safety and Compliance Validation",
-                "Go/No-Go Governance"
+                "Project initiation",
+                "Basic stakeholder alignment",
+                "Vendor coordination",
+                "Pilot deployment",
+                "Basic training"
             ],
-            "mandatory_risks": [
-                "WMS/ERP integration failure",
-                "Incorrect data exchange between systems",
-                "Delayed end-to-end testing",
-                "Operational downtime during rollout",
-                "Safety validation failure",
-                "Stakeholder alignment issues"
+            "risks": [
+                "Limited stakeholder involvement",
+                "Underestimated operational impact"
             ],
-            "mandatory_milestones": [
+            "milestones": [
+                "Project charter approved",
+                "Pilot deployment completed",
+                "Basic training completed"
+            ]
+        },
+
+        "Medium": {
+            "governance_level": "Structured governance",
+            "mandatory_workstreams": [
+                "Project initiation",
+                "Stakeholder management",
+                "System integration planning",
+                "Operational readiness",
+                "Training and change management",
+                "Rollout coordination"
+            ],
+            "risks": [
+                "Integration delays",
+                "Stakeholder misalignment",
+                "Operational disruption during rollout"
+            ],
+            "milestones": [
+                "Project charter approved",
+                "Integration plan approved",
+                "Operational readiness confirmed",
+                "Rollout completed"
+            ]
+        },
+
+        "High": {
+            "governance_level": "Strong governance",
+            "mandatory_workstreams": [
+                "Project initiation",
+                "Detailed stakeholder management",
+                "Complex system integration planning",
+                "Dependency management",
+                "Risk and issue management",
+                "Change management",
+                "Training strategy",
+                "Phased rollout planning",
+                "Post-go-live stabilization"
+            ],
+            "risks": [
+                "Complex integration dependencies",
+                "High operational disruption risk",
+                "Resistance to change",
+                "Vendor delivery delays",
+                "Insufficient rollout governance"
+            ],
+            "milestones": [
+                "Project charter approved",
                 "Integration design approved",
-                "API/data exchange validated",
-                "End-to-end test completed",
-                "Safety validation approved",
-                "Go/no-go decision completed"
-            ],
-            "governance_level": "Formal steering committee with phase-gate approvals"
+                "Risk review completed",
+                "Phased rollout completed",
+                "Stabilization completed"
+            ]
         }
+    }
+
+    rules = complexity_rules.get(integration_complexity, complexity_rules["Medium"])
+    scale_rules = get_deployment_scale_rules(deployment_scale)
+
+    return {
+        "integration_complexity": integration_complexity,
+        "deployment_scale": deployment_scale,
+        "governance_level": rules["governance_level"],
+        "planning_depth": scale_rules["planning_depth"],
+        "rollout_strategy": scale_rules["rollout_strategy"],
+        "mandatory_workstreams": rules["mandatory_workstreams"] + scale_rules["additional_workstreams"],
+        "risks": rules["risks"] + scale_rules["additional_risks"],
+        "milestones": rules["milestones"] + scale_rules["key_milestones"]
+    }

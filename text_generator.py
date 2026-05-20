@@ -3,11 +3,12 @@ from io import BytesIO
 
 def clean_ai_text(text):
     cleaned_text = text.replace("**", "")
+    cleaned_text = cleaned_text.replace("*", "-")
     cleaned_text = cleaned_text.replace("#", "")
-    return cleaned_text
+    return cleaned_text.strip()
 
 
-def create_text_file(text, integration_complexity, output_type):
+def create_text_file(text, integration_complexity, deployment_scale, output_type):
     buffer = BytesIO()
 
     clean_text = clean_ai_text(text)
@@ -17,6 +18,7 @@ Prototype: AI-Supported Adaptive Planning Framework for AMR Deployment in Wareho
 
 Selected Output: {output_type}
 Integration Complexity: {integration_complexity}
+Deployment Scale: {deployment_scale}
 
 ------------------------------------------------------------
 

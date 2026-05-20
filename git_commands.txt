@@ -1,0 +1,10 @@
+Check Status: git Status
+Add files to git: git add .
+Creating Commit: git commit -m "Initial commit - AI PM planning prototype"
+Connecting local repo to GitHub: git remote add origin YOUR_REPOSITORY_URL
+Push code to GitHub: git branch -M main, git push -u origin main
+
+Workflow
+1. Save changes: git add .
+2. Commit changes: git commit -m "Added PDF export"
+3. Upload to GitHub: git push

@@ -1,43 +1,38 @@
 import ollama
-from pm_rules import get_pm_rules
 
 
-def generate_pm_output(integration_complexity, output_type):
-    rules = get_pm_rules(integration_complexity)
-
+def generate_ai_output(integration_complexity, deployment_scale, output_type, pm_rules):
     prompt = f"""
-You are a project management assistant.
+You are an experienced project manager supporting AMR deployment projects in warehouse logistics.
 
-Create a customized {output_type} for an AMR deployment project in warehouse logistics.
+Generate a professional project management planning output based on the following inputs.
 
-Project parameter:
-Integration Complexity = {integration_complexity}
+Input Parameters:
+- Integration Complexity: {integration_complexity}
+- Deployment Scale: {deployment_scale}
+- Requested Output Type: {output_type}
 
-The following deterministic PM rules MUST be followed.
+Project Management Rules:
+- Governance Level: {pm_rules["governance_level"]}
+- Planning Depth: {pm_rules["planning_depth"]}
+- Rollout Strategy: {pm_rules["rollout_strategy"]}
 
-Planning depth:
-{rules["planning_depth"]}
+Mandatory Workstreams:
+{pm_rules["mandatory_workstreams"]}
 
-Mandatory workstreams:
-{rules["mandatory_workstreams"]}
+Key Risks:
+{pm_rules["risks"]}
 
-Mandatory risks:
-{rules["mandatory_risks"]}
+Key Milestones:
+{pm_rules["milestones"]}
 
-Mandatory milestones:
-{rules["mandatory_milestones"]}
-
-Governance level:
-{rules["governance_level"]}
-
-Output requirements:
-- Generate only the selected output type: {output_type}
-- Keep the output practical and project-management-focused.
-- Use clear headings.
-- Include the mandatory elements from the deterministic rules.
-- Do not ignore the mandatory workstreams, risks, milestones, or governance level.
-- Do not write generic theory.
-- Make the output suitable for a capstone prototype.
+Instructions:
+- Keep the output focused on project management.
+- Do not go too deep into robotics engineering details.
+- Emphasize planning, governance, stakeholder coordination, rollout, risk management, and operational readiness.
+- Make the output practical and suitable for a capstone prototype.
+- Format the answer clearly using headings and bullet points.
+- Generate only the requested output type: {output_type}.
 """
 
     response = ollama.chat(
@@ -47,11 +42,7 @@ Output requirements:
                 "role": "user",
                 "content": prompt
             }
-        ],
-        options={
-            "temperature": 0.2,
-            "num_predict": 700
-        }
+        ]
     )
 
     return response["message"]["content"]
