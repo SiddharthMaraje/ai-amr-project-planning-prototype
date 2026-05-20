@@ -8,9 +8,17 @@ def clean_ai_text(text):
     return cleaned_text.strip()
 
 
-def create_text_file(text, integration_complexity, deployment_scale, output_type):
+def create_text_file(
+    prompt,
+    text,
+    integration_complexity,
+    deployment_scale,
+    output_type
+):
+
     buffer = BytesIO()
 
+    clean_prompt = clean_ai_text(prompt)
     clean_text = clean_ai_text(text)
 
     content = f"""
@@ -20,7 +28,15 @@ Selected Output: {output_type}
 Integration Complexity: {integration_complexity}
 Deployment Scale: {deployment_scale}
 
-------------------------------------------------------------
+============================================================
+GENERATED PROMPT
+============================================================
+
+{clean_prompt}
+
+============================================================
+AI-GENERATED OUTPUT
+============================================================
 
 {clean_text}
 """

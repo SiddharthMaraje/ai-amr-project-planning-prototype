@@ -46,7 +46,9 @@ Instructions:
         ]
     )
 
-    return response["message"]["content"]
+    ai_output = response["message"]["content"]
+
+    return prompt, ai_output
 
 
 def generate_timeline_json(integration_complexity, deployment_scale, pm_rules):

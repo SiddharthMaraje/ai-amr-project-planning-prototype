@@ -26,6 +26,9 @@ st.divider()
 if "ai_output" not in st.session_state:
     st.session_state.ai_output = None
 
+if "generated_prompt" not in st.session_state:
+    st.session_state.generated_prompt = None
+
 if "text_file" not in st.session_state:
     st.session_state.text_file = None
 
@@ -94,7 +97,7 @@ if generate_button:
                 deployment_scale=deployment_scale
             )
 
-            ai_output = generate_ai_output(
+            generated_prompt, ai_output = generate_ai_output(
                 integration_complexity=integration_complexity,
                 deployment_scale=deployment_scale,
                 output_type=output_type,
@@ -102,6 +105,7 @@ if generate_button:
             )
 
             text_file = create_text_file(
+                generated_prompt,
                 ai_output,
                 integration_complexity,
                 deployment_scale,
@@ -114,6 +118,7 @@ if generate_button:
                 f"{deployment_scale.lower().replace(' ', '_')}.txt"
             )
 
+            st.session_state.generated_prompt = generated_prompt
             st.session_state.ai_output = ai_output
             st.session_state.text_file = text_file
             st.session_state.file_name = file_name
