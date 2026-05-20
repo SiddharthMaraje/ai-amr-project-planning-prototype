@@ -1,8 +1,10 @@
 import streamlit as st
 from ai_generator import generate_pm_output
-from pdf_generator import create_pdf
+from text_generator import create_text_file
 
-st.title("Prototype: AI-Supported Adaptive Planning Framework for AMR Deployment in Warehouse Logistics")
+st.title(
+    "Prototype: AI-Supported Adaptive Planning Framework for AMR Deployment in Warehouse Logistics"
+)
 
 st.write(
     "This prototype generates customized project management outputs "
@@ -22,8 +24,8 @@ output_type = st.selectbox(
 if "ai_output" not in st.session_state:
     st.session_state.ai_output = ""
 
-if "pdf_file" not in st.session_state:
-    st.session_state.pdf_file = None
+if "text_file" not in st.session_state:
+    st.session_state.text_file = None
 
 if st.button("Generate Planning Output"):
     with st.spinner("Generating planning output..."):
@@ -32,7 +34,7 @@ if st.button("Generate Planning Output"):
             output_type
         )
 
-        st.session_state.pdf_file = create_pdf(
+        st.session_state.text_file = create_text_file(
             st.session_state.ai_output,
             integration_complexity,
             output_type
@@ -43,8 +45,8 @@ if st.session_state.ai_output:
     st.write(st.session_state.ai_output)
 
     st.download_button(
-        label="Download Output as PDF",
-        data=st.session_state.pdf_file,
-        file_name=f"amr_{output_type.lower().replace(' ', '_')}_{integration_complexity.lower()}_complexity.pdf",
-        mime="application/pdf"
+        label="Download Output as Text File",
+        data=st.session_state.text_file,
+        file_name=f"amr_{output_type.lower().replace(' ', '_')}_{integration_complexity.lower()}_complexity.txt",
+        mime="text/plain"
     )
