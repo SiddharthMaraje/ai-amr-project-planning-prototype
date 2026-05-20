@@ -22,9 +22,16 @@ Project Management Rules:
 - Governance Level: {pm_rules["governance_level"]}
 - Planning Depth: {pm_rules["planning_depth"]}
 - Rollout Strategy: {pm_rules["rollout_strategy"]}
+- Estimated Timeline: {pm_rules["estimated_timeline"]}
 
 Mandatory Workstreams:
 {pm_rules["mandatory_workstreams"]}
+
+Required Stakeholders:
+{pm_rules["stakeholders"]}
+
+Required Governance Mechanisms:
+{pm_rules["governance_mechanisms"]}
 
 Key Risks:
 {pm_rules["risks"]}
@@ -32,17 +39,24 @@ Key Risks:
 Key Milestones:
 {pm_rules["milestones"]}
 
+Success Criteria:
+{pm_rules["success_criteria"]}
+
 Instructions:
 - Generate ONLY a Project Charter.
 - Use exactly the section structure provided below.
 - Do not remove, rename, or add sections.
 - Keep the output focused on project management.
 - Do not go too deep into robotics engineering details.
-- Adjust the depth of detail based on the integration complexity.
-- Low complexity should have lighter detail.
-- Medium complexity should have moderate detail.
-- High complexity should have deeper governance, risk, dependency, and rollout detail.
 - Make the output practical and suitable for a capstone prototype.
+- Use the required stakeholders, governance mechanisms, risks, milestones, and success criteria.
+- Avoid generic statements such as "improve efficiency" unless they are linked to warehouse operations.
+- Make objectives SMART-style where possible.
+- The depth should match the selected integration complexity.
+- Low complexity should be concise.
+- Medium complexity should be moderately detailed.
+- High complexity should include stronger governance, dependencies, risk control, change management, rollout planning, and stabilization.
+- Mention inbound, storage, picking, and outbound operations where relevant.
 
 Required Project Charter Format:
 
@@ -101,6 +115,7 @@ Project Management Rules:
 - Governance Level: {pm_rules["governance_level"]}
 - Planning Depth: {pm_rules["planning_depth"]}
 - Rollout Strategy: {pm_rules["rollout_strategy"]}
+- Estimated Timeline: {pm_rules["estimated_timeline"]}
 
 Mandatory Workstreams:
 {pm_rules["mandatory_workstreams"]}
@@ -179,6 +194,7 @@ Project Management Rules:
 - Governance Level: {pm_rules["governance_level"]}
 - Planning Depth: {pm_rules["planning_depth"]}
 - Rollout Strategy: {pm_rules["rollout_strategy"]}
+- Estimated Timeline: {pm_rules["estimated_timeline"]}
 
 Mandatory Workstreams:
 {pm_rules["mandatory_workstreams"]}

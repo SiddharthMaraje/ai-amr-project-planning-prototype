@@ -16,7 +16,8 @@ def get_deployment_scale_rules(deployment_scale):
                 "Pilot scope approved",
                 "Pilot deployment completed",
                 "Pilot feedback reviewed"
-            ]
+            ],
+            "estimated_timeline": "8-12 weeks"
         },
 
         "Single-Zone Rollout": {
@@ -35,7 +36,8 @@ def get_deployment_scale_rules(deployment_scale):
                 "Zone readiness confirmed",
                 "Single-zone rollout completed",
                 "Zone handover completed"
-            ]
+            ],
+            "estimated_timeline": "12-16 weeks"
         },
 
         "Multi-Zone Rollout": {
@@ -57,7 +59,8 @@ def get_deployment_scale_rules(deployment_scale):
                 "First zone deployed",
                 "All selected zones deployed",
                 "Cross-zone operations stabilized"
-            ]
+            ],
+            "estimated_timeline": "16-24 weeks"
         },
 
         "Full Warehouse Rollout": {
@@ -81,7 +84,8 @@ def get_deployment_scale_rules(deployment_scale):
                 "Warehouse-wide training completed",
                 "Go-live completed",
                 "Post-go-live stabilization completed"
-            ]
+            ],
+            "estimated_timeline": "24-36 weeks"
         }
     }
 
@@ -107,6 +111,24 @@ def get_pm_rules(integration_complexity, deployment_scale):
                 "Project charter approved",
                 "Pilot deployment completed",
                 "Basic training completed"
+            ],
+            "governance_mechanisms": [
+                "Project manager-led weekly check-in",
+                "Basic issue log",
+                "Sponsor review at key milestones"
+            ],
+            "stakeholders": [
+                "Project Manager",
+                "Warehouse Operations Team",
+                "AMR Vendor",
+                "Warehouse Supervisors",
+                "Warehouse Workers"
+            ],
+            "success_criteria": [
+                "Pilot or limited rollout completed with minimal disruption",
+                "Core users trained",
+                "Initial AMR workflow validated",
+                "Lessons learned documented"
             ]
         },
 
@@ -130,6 +152,32 @@ def get_pm_rules(integration_complexity, deployment_scale):
                 "Integration plan approved",
                 "Operational readiness confirmed",
                 "Rollout completed"
+            ],
+            "governance_mechanisms": [
+                "Weekly project status meeting",
+                "Bi-weekly steering review",
+                "Risk and issue register",
+                "Change request review process",
+                "Vendor coordination meetings"
+            ],
+            "stakeholders": [
+                "Project Manager",
+                "Executive Sponsor",
+                "Warehouse Operations Team",
+                "Logistics / Process Engineers",
+                "IT & Systems Team",
+                "Health & Safety Officers",
+                "AMR Vendor",
+                "System Integrator",
+                "Warehouse Supervisors",
+                "Warehouse Workers"
+            ],
+            "success_criteria": [
+                "AMR rollout completed according to approved scope",
+                "Operational readiness confirmed before go-live",
+                "Users trained before deployment",
+                "Integration dependencies managed without major delay",
+                "Post-go-live issues stabilized within agreed period"
             ]
         },
 
@@ -159,6 +207,39 @@ def get_pm_rules(integration_complexity, deployment_scale):
                 "Risk review completed",
                 "Phased rollout completed",
                 "Stabilization completed"
+            ],
+            "governance_mechanisms": [
+                "Steering committee governance",
+                "Weekly project control meeting",
+                "Weekly risk and dependency review",
+                "Formal phase-gate approvals",
+                "Change control board for scope or timeline changes",
+                "Vendor performance review meetings",
+                "Go-live readiness review",
+                "Post-go-live stabilization review"
+            ],
+            "stakeholders": [
+                "Project Manager",
+                "Executive Sponsor",
+                "Warehouse Operations Leadership",
+                "Warehouse Operations Team",
+                "Logistics / Process Engineers",
+                "IT & Systems Team",
+                "Health & Safety Officers",
+                "AMR Vendor",
+                "System Integrator",
+                "Warehouse Supervisors",
+                "Warehouse Workers",
+                "Maintenance Team",
+                "Training / Change Management Lead"
+            ],
+            "success_criteria": [
+                "Warehouse-wide AMR deployment completed with controlled disruption",
+                "Inbound, storage, picking, and outbound workflows operationally aligned",
+                "Critical system integrations validated before go-live",
+                "Warehouse-wide training completed before rollout",
+                "Major risks and dependencies actively governed",
+                "Stable operations achieved within the post-go-live stabilization window"
             ]
         }
     }
@@ -172,7 +253,11 @@ def get_pm_rules(integration_complexity, deployment_scale):
         "governance_level": rules["governance_level"],
         "planning_depth": scale_rules["planning_depth"],
         "rollout_strategy": scale_rules["rollout_strategy"],
+        "estimated_timeline": scale_rules["estimated_timeline"],
         "mandatory_workstreams": rules["mandatory_workstreams"] + scale_rules["additional_workstreams"],
-        "risks": rules["risks"] + scale_rules["additional_risks"],
-        "milestones": rules["milestones"] + scale_rules["key_milestones"]
+        "risks": list(dict.fromkeys(rules["risks"] + scale_rules["additional_risks"])),
+        "milestones": list(dict.fromkeys(rules["milestones"] + scale_rules["key_milestones"])),
+        "governance_mechanisms": rules["governance_mechanisms"],
+        "stakeholders": rules["stakeholders"],
+        "success_criteria": rules["success_criteria"]
     }
