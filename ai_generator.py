@@ -50,12 +50,9 @@ Instructions:
 - Do not go too deep into robotics engineering details.
 - Make the output practical and suitable for a capstone prototype.
 - Use the required stakeholders, governance mechanisms, risks, milestones, and success criteria.
-- Avoid generic statements such as "improve efficiency" unless they are linked to warehouse operations.
+- Avoid generic statements unless linked to warehouse operations.
 - Make objectives SMART-style where possible.
 - The depth should match the selected integration complexity.
-- Low complexity should be concise.
-- Medium complexity should be moderately detailed.
-- High complexity should include stronger governance, dependencies, risk control, change management, rollout planning, and stabilization.
 - Mention inbound, storage, picking, and outbound operations where relevant.
 
 Required Project Charter Format:
@@ -133,6 +130,12 @@ Instructions:
 - Make the output practical and suitable for a capstone prototype.
 - Format the answer clearly using headings and bullet points.
 - Generate only the requested output type: {output_type}.
+
+If the requested output type is Timeline:
+- Create a clear week-based timeline.
+- Use project weeks, for example Week 1-2, Week 3-5, etc.
+- Include activity names and short descriptions.
+- Make the sequence realistic for the selected integration complexity and deployment scale.
 """
 
     return prompt
@@ -175,57 +178,44 @@ def generate_ai_output(
     return prompt, ai_output
 
 
-def generate_timeline_json(
-    integration_complexity,
-    deployment_scale,
-    pm_rules
-):
+def generate_timeline_json_from_text(timeline_text):
 
     prompt = f"""
-You are a project planning assistant for AMR deployment projects in warehouse logistics.
+You are a project planning data extraction assistant.
 
-Generate structured timeline data for a Gantt chart.
+Convert the following AI-generated project timeline into structured JSON for a Gantt chart.
 
-Project Inputs:
-- Integration Complexity: {integration_complexity}
-- Deployment Scale: {deployment_scale}
-
-Project Management Rules:
-- Governance Level: {pm_rules["governance_level"]}
-- Planning Depth: {pm_rules["planning_depth"]}
-- Rollout Strategy: {pm_rules["rollout_strategy"]}
-- Estimated Timeline: {pm_rules["estimated_timeline"]}
-
-Mandatory Workstreams:
-{pm_rules["mandatory_workstreams"]}
-
-Key Milestones:
-{pm_rules["milestones"]}
+AI-GENERATED TIMELINE:
+{timeline_text}
 
 Return ONLY valid JSON.
 
 Required JSON format:
 
 [
-    {{
-        "task": "Project Initiation",
-        "start_week": 1,
-        "duration_weeks": 2
-    }},
-    {{
-        "task": "Stakeholder Alignment",
-        "start_week": 3,
-        "duration_weeks": 2
-    }}
+  {{
+    "task": "Project Initiation",
+    "start_week": 1,
+    "duration_weeks": 2
+  }},
+  {{
+    "task": "Stakeholder Alignment",
+    "start_week": 3,
+    "duration_weeks": 2
+  }}
 ]
 
 Rules:
-- Return ONLY JSON.
+- Return only a JSON array.
 - Do not include markdown.
-- Do not include explanations.
+- Do not include explanation.
+- Do not include text before or after the JSON.
+- Use double quotes only.
 - Use integer values only.
-- Keep the timeline realistic for warehouse AMR deployment projects.
-- Include at least 6-10 project activities.
+- start_week must be the first week of the task.
+- duration_weeks must be the number of weeks the task lasts.
+- Preserve the same task sequence from the AI-generated timeline.
+- Do not invent unrelated tasks.
 """
 
     response = ollama.chat(

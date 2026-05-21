@@ -1,6 +1,6 @@
 import streamlit as st
 from pm_rules import get_pm_rules
-from ai_generator import generate_ai_output, generate_timeline_json
+from ai_generator import generate_ai_output, generate_timeline_json_from_text
 from text_generator import create_text_file
 from gantt_generator import parse_timeline_json, create_gantt_chart
 
@@ -39,6 +39,9 @@ if "gantt_fig" not in st.session_state:
 
 if "gantt_buffer" not in st.session_state:
     st.session_state.gantt_buffer = None
+
+if "gantt_status" not in st.session_state:
+    st.session_state.gantt_status = None
 
 
 col1, col2 = st.columns([1, 2])
@@ -121,25 +124,34 @@ if generate_button:
 
             st.session_state.gantt_fig = None
             st.session_state.gantt_buffer = None
+            st.session_state.gantt_status = None
 
             if generate_gantt:
 
-                timeline_json_response = generate_timeline_json(
-                    integration_complexity=integration_complexity,
-                    deployment_scale=deployment_scale,
-                    pm_rules=pm_rules
+                timeline_json_response = generate_timeline_json_from_text(
+                    ai_output
                 )
 
                 timeline_data = parse_timeline_json(
                     timeline_json_response
                 )
 
-                gantt_fig, gantt_buffer = create_gantt_chart(
-                    timeline_data
-                )
+                if timeline_data:
+                    gantt_fig, gantt_buffer = create_gantt_chart(
+                        timeline_data
+                    )
 
-                st.session_state.gantt_fig = gantt_fig
-                st.session_state.gantt_buffer = gantt_buffer
+                    st.session_state.gantt_fig = gantt_fig
+                    st.session_state.gantt_buffer = gantt_buffer
+                    st.session_state.gantt_status = (
+                        "Gantt chart generated from the AI-created timeline."
+                    )
+
+                else:
+                    st.session_state.gantt_status = (
+                        "The AI timeline was generated, but it could not be converted "
+                        "into valid Gantt chart data. Please regenerate the timeline."
+                    )
 
     except Exception as e:
         st.error("Something went wrong while generating the output.")
@@ -163,18 +175,23 @@ if st.session_state.ai_output:
         )
 
 
-if st.session_state.gantt_fig:
+if st.session_state.gantt_status:
 
-    st.subheader("Generated Gantt Chart")
+    if st.session_state.gantt_fig is not None:
+        st.subheader("Generated Gantt Chart")
+        st.info(st.session_state.gantt_status)
 
-    st.pyplot(st.session_state.gantt_fig)
+        st.pyplot(st.session_state.gantt_fig)
 
-    gantt_download_col, empty_col = st.columns([1, 4])
+        gantt_download_col, empty_col = st.columns([1, 4])
 
-    with gantt_download_col:
-        st.download_button(
-            label="Download Gantt PNG",
-            data=st.session_state.gantt_buffer,
-            file_name="amr_gantt_chart.png",
-            mime="image/png"
-        )
+        with gantt_download_col:
+            st.download_button(
+                label="Download Gantt PNG",
+                data=st.session_state.gantt_buffer,
+                file_name="amr_gantt_chart.png",
+                mime="image/png"
+            )
+
+    else:
+        st.warning(st.session_state.gantt_status)
