@@ -8,3 +8,7 @@ Workflow
 1. Save changes: git add .
 2. Commit changes: git commit -m "Added PDF export"
 3. Upload to GitHub: git push
+
+1. Creating a new branch: git branch <branch_name>
+
+

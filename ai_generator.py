@@ -164,7 +164,7 @@ def generate_ai_output(
         )
 
     response = ollama.chat(
-        model="llama3",
+        model="deepseek-r1:7b",
         messages=[
             {
                 "role": "user",
@@ -219,7 +219,7 @@ Rules:
 """
 
     response = ollama.chat(
-        model="llama3",
+        model="deepseek-r1:7b",
         messages=[
             {
                 "role": "user",
