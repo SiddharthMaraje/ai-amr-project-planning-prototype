@@ -5,4 +5,4 @@ venv/
 dist/
 build/
 *.pdf
-.streamlit/
+.streamlit/secrets.toml

@@ -1,4 +1,13 @@
-import ollama
+import streamlit as st
+from groq import Groq
+
+
+GROQ_MODEL = "llama-3.1-8b-instant"
+
+
+def get_groq_client():
+    api_key = st.secrets["GROQ_API_KEY"]
+    return Groq(api_key=api_key)
 
 
 def create_project_charter_prompt(
@@ -163,17 +172,25 @@ def generate_ai_output(
             pm_rules
         )
 
-    response = ollama.chat(
-        model="deepseek-r1:7b",
+    client = get_groq_client()
+
+    response = client.chat.completions.create(
+        model=GROQ_MODEL,
         messages=[
+            {
+                "role": "system",
+                "content": "You are an experienced project management assistant."
+            },
             {
                 "role": "user",
                 "content": prompt
             }
-        ]
+        ],
+        temperature=0.3,
+        max_tokens=1800,
     )
 
-    ai_output = response["message"]["content"]
+    ai_output = response.choices[0].message.content
 
     return prompt, ai_output
 
@@ -218,14 +235,22 @@ Rules:
 - Do not invent unrelated tasks.
 """
 
-    response = ollama.chat(
-        model="deepseek-r1:7b",
+    client = get_groq_client()
+
+    response = client.chat.completions.create(
+        model=GROQ_MODEL,
         messages=[
+            {
+                "role": "system",
+                "content": "You return only valid JSON. Do not use markdown."
+            },
             {
                 "role": "user",
                 "content": prompt
             }
-        ]
+        ],
+        temperature=0.1,
+        max_tokens=1000,
     )
 
-    return response["message"]["content"]
+    return response.choices[0].message.content
